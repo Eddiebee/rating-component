@@ -1,23 +1,58 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
 function App() {
+  const [ratings, setRatings] = useState([
+    { rate: 1, rated: false },
+    { rate: 2, rated: false },
+    { rate: 3, rated: false },
+    { rate: 4, rated: false },
+    { rate: 5, rated: false },
+  ]);
+
+  const [stars, setStars] = useState(0);
+
+  const addRating = (rate) => {
+    const myRating = ratings;
+    const newRatings = myRating
+      .filter((rating) => rating.rate <= rate)
+      .map(({ rate }) => {
+        return { rate, rated: true };
+      });
+    const left = myRating.filter((rating) => rating.rate > rate);
+
+    setRatings([...newRatings, ...left]);
+    setStars(rate);
+  };
+
+  const removeRating = (rate) => {
+    const myRating = ratings;
+    const newRatings = myRating
+      .filter((rating) => rating.rate > rate)
+      .map(({ rate }) => {
+        return { rate, rated: false };
+      });
+    const left = myRating.filter((rating) => rating.rate <= rate);
+
+    setRatings([...left, ...newRatings]);
+    setStars(rate);
+  };
+
+  const starStyle = { fontSize: "4rem", cursor: "pointer" };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App" style={{ textAlign: "center" }}>
+      {ratings.map(({ rate, rated }) =>
+        rated ? (
+          <AiFillStar onClick={() => removeRating(rate)} style={starStyle} />
+        ) : (
+          <AiOutlineStar onClick={() => addRating(rate)} style={starStyle} />
+        )
+      )}
+      <h1>
+        {stars}
+        {stars <= 1 ? ` star` : ` stars`}
+      </h1>
     </div>
   );
 }

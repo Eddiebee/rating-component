@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
+import styled from "styled-components";
 
 function App() {
   const [ratings, setRatings] = useState([
@@ -41,7 +42,7 @@ function App() {
   const starStyle = { fontSize: "4rem", cursor: "pointer" };
 
   return (
-    <div className="App" style={{ textAlign: "center" }}>
+    <Wrapper>
       {ratings.map(({ rate, rated }) =>
         rated ? (
           <AiFillStar onClick={() => removeRating(rate)} style={starStyle} />
@@ -53,8 +54,12 @@ function App() {
         {stars}
         {stars <= 1 ? ` star` : ` stars`}
       </h1>
-    </div>
+    </Wrapper>
   );
 }
+
+const Wrapper = styled.div`
+  background: red;
+`;
 
 export default App;

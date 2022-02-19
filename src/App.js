@@ -48,6 +48,10 @@ function App() {
 
   return (
     <Wrapper>
+      <h1 className={!stars ? "shake-horizontal" : null}>
+        {stars ? starMsg[stars] : "...waiting for your rating"}
+      </h1>
+
       {ratings.map(({ rate, rated }) =>
         rated ? (
           <AiFillStar onClick={() => removeRating(rate)} className="fill" />
@@ -55,18 +59,15 @@ function App() {
           <AiOutlineStar onClick={() => addRating(rate)} className="fill" />
         )
       )}
-
-      <h1 className={!stars ? "shake-horizontal" : null}>
-        {stars ? starMsg[stars] : "...waiting for your rating"}
-      </h1>
     </Wrapper>
   );
 }
 
 const Wrapper = styled.div`
-  height: 300px;
+  /* height: 150px; */
   max-width: 547px;
   margin: 4rem auto;
+  padding: 2rem;
   background: #e5e5e5;
   text-align: center;
   border-radius: 10px;
@@ -81,9 +82,8 @@ const Wrapper = styled.div`
   }
 
   svg {
-    color: #ffcc48;
+    color: #323357;
     font-size: 3rem;
-    margin: 5rem 0 0.5rem;
     padding: 5px;
   }
 

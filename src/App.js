@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
+import { nanoid } from "nanoid";
 import styled from "styled-components";
 
 function App() {
@@ -54,9 +55,9 @@ function App() {
 
       {ratings.map(({ rate, rated }) =>
         rated ? (
-          <AiFillStar onClick={() => removeRating(rate)} className="fill" />
+          <AiFillStar onClick={() => removeRating(rate)} key={nanoid()} />
         ) : (
-          <AiOutlineStar onClick={() => addRating(rate)} className="fill" />
+          <AiOutlineStar onClick={() => addRating(rate)} key={nanoid()} />
         )
       )}
     </Wrapper>

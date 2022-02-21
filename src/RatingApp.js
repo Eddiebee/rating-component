@@ -2,16 +2,23 @@ import React from "react";
 import { useState } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { nanoid } from "nanoid";
+import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
-const RatingApp = () => {
-  const [ratings, setRatings] = useState([
+const ratingState = atom({
+  key: "ratingState",
+  default: [
     { rate: 1, rated: false },
     { rate: 2, rated: false },
     { rate: 3, rated: false },
     { rate: 4, rated: false },
     { rate: 5, rated: false },
-  ]);
+  ],
+});
+
+const RatingApp = () => {
+  const ratings = useRecoilValue(ratingState);
+  const setRatings = useSetRecoilState(ratingState);
 
   const [stars, setStars] = useState(0);
   const starMsg = {
@@ -23,26 +30,24 @@ const RatingApp = () => {
   };
 
   const addRating = (rate) => {
-    const myRating = ratings;
-    const newRatings = myRating
+    const newRatings = ratings
       .filter((rating) => rating.rate <= rate)
       .map(({ rate }) => {
         return { rate, rated: true };
       });
-    const left = myRating.filter((rating) => rating.rate > rate);
+    const left = ratings.filter((rating) => rating.rate > rate);
 
     setRatings([...newRatings, ...left]);
     setStars(rate);
   };
 
   const removeRating = (rate) => {
-    const myRating = ratings;
-    const newRatings = myRating
+    const newRatings = ratings
       .filter((rating) => rating.rate > rate)
       .map(({ rate }) => {
         return { rate, rated: false };
       });
-    const left = myRating.filter((rating) => rating.rate <= rate);
+    const left = ratings.filter((rating) => rating.rate <= rate);
 
     setRatings([...left, ...newRatings]);
     setStars(rate);

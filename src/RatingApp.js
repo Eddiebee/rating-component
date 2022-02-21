@@ -4,6 +4,7 @@ import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { nanoid } from "nanoid";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import { addRate, removeRate } from "./utils/ratingUtils";
 
 const ratingState = atom({
   key: "ratingState",
@@ -30,26 +31,12 @@ const RatingApp = () => {
   };
 
   const addRating = (rate) => {
-    const newRatings = ratings
-      .filter((rating) => rating.rate <= rate)
-      .map(({ rate }) => {
-        return { rate, rated: true };
-      });
-    const left = ratings.filter((rating) => rating.rate > rate);
-
-    setRatings([...newRatings, ...left]);
+    setRatings(addRate(ratings, rate));
     setStars(rate);
   };
 
   const removeRating = (rate) => {
-    const newRatings = ratings
-      .filter((rating) => rating.rate > rate)
-      .map(({ rate }) => {
-        return { rate, rated: false };
-      });
-    const left = ratings.filter((rating) => rating.rate <= rate);
-
-    setRatings([...left, ...newRatings]);
+    setRatings(removeRate(ratings, rate));
     setStars(rate);
   };
   return (

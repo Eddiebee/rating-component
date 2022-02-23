@@ -39,7 +39,7 @@ const RatingApp = () => {
     setStars(rate);
   };
   return (
-    <div className="container shadow-2xl max-w-md mx-auto mt-6 bg-rose-600 rounded-md text-zinc-100 font-mono antialiased">
+    <div className="container shadow-2xl max-w-md mx-auto mt-6 bg-amber-500 rounded-md text-zinc-100 font-mono antialiased">
       <h1
         className={`text-zinc-100/85 text-center text-xl tracking-wide p-6 ${
           !stars ? "animate-pulse " : null
@@ -48,7 +48,7 @@ const RatingApp = () => {
         {stars ? starMsg[stars] : "...waiting for your rating"}
       </h1>
 
-      <div className="ring-rose-300 ring-offset-2 ring-offset-rose-100 ring-2 rounded-lg flex gap-x-4 justify-center p-6">
+      <div className="ring-amber-300 ring-offset-2 ring-offset-rose-100 ring-2 rounded-lg flex gap-x-4 justify-center p-6">
         {ratings.map(({ rate, rated }) =>
           rated ? (
             <AiFillStar

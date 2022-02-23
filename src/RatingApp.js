@@ -3,7 +3,6 @@ import { useState } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { nanoid } from "nanoid";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
-import styled from "styled-components";
 import { addRate, removeRate } from "./utils/ratingUtils";
 
 const ratingState = atom({
@@ -23,11 +22,11 @@ const RatingApp = () => {
 
   const [stars, setStars] = useState(0);
   const starMsg = {
-    1: "I hate it",
-    2: "I don't like it",
-    3: "It's ok",
-    4: "I liked it",
-    5: "I loved it",
+    1: "It's not a good one 😒",
+    2: "..arhm, it' just there 😖",
+    3: "It's ok 🙁",
+    4: "I liked it 🙂",
+    5: "wow! I loved it 🤩",
   };
 
   const addRating = (rate) => {
@@ -40,110 +39,34 @@ const RatingApp = () => {
     setStars(rate);
   };
   return (
-    <Wrapper>
-      <h1 className={!stars ? "shake-horizontal" : null}>
+    <div className="container shadow-2xl max-w-md mx-auto mt-6 bg-rose-600 rounded-md text-zinc-100 font-mono antialiased">
+      <h1
+        className={`text-zinc-100/85 text-center text-xl tracking-wide p-6 ${
+          !stars ? "animate-pulse " : null
+        }`}
+      >
         {stars ? starMsg[stars] : "...waiting for your rating"}
       </h1>
 
-      {ratings.map(({ rate, rated }) =>
-        rated ? (
-          <AiFillStar onClick={() => removeRating(rate)} key={nanoid()} />
-        ) : (
-          <AiOutlineStar onClick={() => addRating(rate)} key={nanoid()} />
-        )
-      )}
-    </Wrapper>
+      <div className="ring-rose-300 ring-offset-2 ring-offset-rose-100 ring-2 rounded-lg flex gap-x-4 justify-center p-6">
+        {ratings.map(({ rate, rated }) =>
+          rated ? (
+            <AiFillStar
+              className="text-5xl"
+              onClick={() => removeRating(rate)}
+              key={nanoid()}
+            />
+          ) : (
+            <AiOutlineStar
+              className="text-5xl"
+              onClick={() => addRating(rate)}
+              key={nanoid()}
+            />
+          )
+        )}
+      </div>
+    </div>
   );
 };
-
-const Wrapper = styled.div`
-  /* height: 150px; */
-  max-width: 547px;
-  margin: 4rem auto;
-  padding: 2rem;
-  background: #e5e5e5;
-  text-align: center;
-  border-radius: 10px;
-  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-
-  h1 {
-    font-size: 1em;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-    font-style: italic;
-    font-weight: 400;
-  }
-
-  svg {
-    color: #323357;
-    font-size: 3rem;
-    padding: 5px;
-  }
-
-  /* animations from animista.net */
-  .shake-horizontal {
-    -webkit-animation: shake-horizontal 3s
-      cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite both;
-    animation: shake-horizontal 3s cubic-bezier(0.455, 0.03, 0.515, 0.955)
-      infinite both;
-  }
-
-  @-webkit-keyframes shake-horizontal {
-    0%,
-    100% {
-      -webkit-transform: translateX(0);
-      transform: translateX(0);
-    }
-    10%,
-    30%,
-    50%,
-    70% {
-      -webkit-transform: translateX(-10px);
-      transform: translateX(-10px);
-    }
-    20%,
-    40%,
-    60% {
-      -webkit-transform: translateX(10px);
-      transform: translateX(10px);
-    }
-    80% {
-      -webkit-transform: translateX(8px);
-      transform: translateX(8px);
-    }
-    90% {
-      -webkit-transform: translateX(-8px);
-      transform: translateX(-8px);
-    }
-  }
-  @keyframes shake-horizontal {
-    0%,
-    100% {
-      -webkit-transform: translateX(0);
-      transform: translateX(0);
-    }
-    10%,
-    30%,
-    50%,
-    70% {
-      -webkit-transform: translateX(-10px);
-      transform: translateX(-10px);
-    }
-    20%,
-    40%,
-    60% {
-      -webkit-transform: translateX(10px);
-      transform: translateX(10px);
-    }
-    80% {
-      -webkit-transform: translateX(8px);
-      transform: translateX(8px);
-    }
-    90% {
-      -webkit-transform: translateX(-8px);
-      transform: translateX(-8px);
-    }
-  }
-`;
 
 export default RatingApp;
